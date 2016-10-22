@@ -3,12 +3,36 @@
     <head>
         <meta charset="utf-8">
         <title>UCR Schedule Generator</title>
-        <link rel="stylesheet" href="/css/normalize.css">
-        <link rel="stylesheet" href="/css/style.css">
-        <script type="text/javascript" src="/js/jquery.min.js"></script>
-        <script type="text/javascript" src="/js/main.js"></script>
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css"
+          href="https://fonts.googleapis.com/css?family=Lato:thin">
+        <link defer rel="stylesheet" href="style.css">
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
     </head>
     <body>
-
+        <div class="container">
+            <div class="landing">
+                <h1>UCR Schedule Generator</h1>
+            </div>
+            <div class="add-course">
+                <input autofocus class="course-input"></input>
+                <button type="button" class="btn btn-success" id="submit-course">+</button>
+            </div>
+            <div class="input-courses card">
+                <ul class="input-list" id="input-list">
+                    <li>You haven't added any courses yet!</li>
+                </ul>
+            </div>
+            <button class="btn btn-primary"id="generate">Generate Schedule</button>
+        </div>
+        <div class="footer">
+            <div class="footer-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/about.html">About</a></li>
+                <li><a target="_blank" href="https://github.com/BradleyCai/ucrsg-frontend">GitHub</a></li>
+            </div>
+        </div>
     </body>
 </html>
