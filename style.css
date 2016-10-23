@@ -1,4 +1,5 @@
 /* Global Style */
+body { overflow: hidden; }
 
 /* Asset Styles */
 
@@ -19,6 +20,24 @@ h1 {
     height: 80px;
     background-color: #bababa;
     z-index: 1;
+	
+	overflow: hidden;
+	opacity: 0;
+	animation: slide-up;
+	animation-delay: 1s;
+	animation-duration: .5s;
+	-webkit-animation-fill-mode: forwards;
+}
+
+@keyframes slide-up {
+	from {
+		opacity: 0.2;
+		bottom: -80px;
+	}
+	to {
+		opacity: 1;
+		bottom: 0;
+	}
 }
 
 .footer-links {
@@ -68,7 +87,7 @@ h1 {
     width: 1000px;
     text-align: center;		
 	animation: zoomin;
-	animation-duration: 0.5s
+	animation-duration: 0.5s;
 }
 
 @keyframes zoomin {
