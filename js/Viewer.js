@@ -7,18 +7,46 @@
   */
 var Viewer = {
     // Will add a view
-    addView: function() {
-
+    addView: function(name, element, index) {
+        if (index === undefined) {
+            Viewer.views.name = element;
+        }
+        else {
+            Viewer.views.name[index] = element;
+        }
     },
 
     // Will set a view to display
-    setView: function() {
-
+    showView: function(name, index) {
+        var ele;
+        if (index === undefined) {
+            ele = Viewer.views.name;
+        }
+        else {
+            ele = Viewer.views.name[index];
+        }
+        ele.show(400);
     },
 
     // Will remove a certain view. Default is to have it fade away
-    removeView: function() {
+    removeView: function(name) {
+        var ele;
+        if (index === undefined) {
+            ele = Viewer.views.name;
+        }
+        else {
+            ele = Viewer.views.name[index];
+        }
+        ele.hide(400);
+    },
 
+    getview: function(name, index) {
+        if (index === undefined) {
+            return Viewer.views.name;
+        }
+        else {
+            return Viewer.views.name[index];
+        }
     },
 
     // Object of views. Contains the jQuery HTML objects of each view. Views
