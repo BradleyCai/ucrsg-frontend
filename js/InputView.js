@@ -1,8 +1,18 @@
 var InputView = {
-    inputRegex: /^\s*([A-Za-z]+)\s+([A-Za-z0-9]+)\s*$/, //new RegExp("^\s*([A-Za-z]+)\s+([A-Za-z0-9]+)\s*$"),
+    inputRegex: /^\s*([A-Za-z]+)\s+([A-Za-z0-9]+)\s*$/,
 
     courses: {
         "courses": []
+    },
+
+    // Converts text from "subject id" to JSON
+    toJSON: function (text, re) {
+        if (re.test(text)) {
+            var matches = re.exec(text);
+        	return {"subject": matches[1], "id": matches[2]};
+        }
+
+        return {"subject": false, "id": false};
     },
 
     // Initializes the Input View. Gives buttons functionality.
@@ -10,8 +20,7 @@ var InputView = {
     	// Add course, input and validate first
     	$("#submit-course").click(function() {
     		var text = $("#course-input").val();
-            console.log(InputView.inputRegex);
-            var courseIdentifier = toJSON(text, InputView.inputRegex);
+            var courseIdentifier = InputView.toJSON(text, InputView.inputRegex);
             var id = courseIdentifier.id;
             var subject = courseIdentifier.subject;
 
@@ -44,7 +53,6 @@ var InputView = {
     		var sendString = JSON.stringify(InputView.courses);
 
     		alert("Sending to server: " + sendString);
-            console.log(InputView.courses);
     		//$.post(<URL>, sendString, <function?>);
     	});
     }
