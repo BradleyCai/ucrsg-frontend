@@ -39,7 +39,7 @@ var Viewer = {
             view = $(view);
             view.hide(400);
             view.id = name;
-            view.html(element);
+            view.html(ele);
             location.append(view);
             view.show(400);
 
@@ -71,7 +71,7 @@ var Viewer = {
             view = $(view);
             view.hide(400);
             view.id = name;
-            view.html(element);
+            view.html(ele);
             location.append(view);
             view.show(400);
 
@@ -86,14 +86,20 @@ var Viewer = {
 
     // Will remove a certain view. Default is to have it fade away
     hideView: function(name) {
-        var ele;
-        if (typeof index === undefined) {
-            ele = Viewer.views[name];
+        var ele = Viewer.views[name];
+        if ($(ele).length) {
+            ele.hide(400);
         }
-        else {
-            ele = Viewer.views[name][index];
+    },
+
+    hideIndexView: function(name, index) {
+        if (Viewer.views[name] === undefined) {
+            return false;
         }
-        ele.hide(400);
+        var ele = Viewer.views[name][index];
+        if ($(ele).length) {
+            ele.hide(400);
+        }
     },
 
     getView: function(name) {
