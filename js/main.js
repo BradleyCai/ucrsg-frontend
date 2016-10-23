@@ -62,12 +62,17 @@ var rmCourseAt = function(index) {
 var refreshCourses = function() {
 	var subject, id;
 	$("#input-list")[0].innerHTML = $("#empty-list")[0].outerHTML;
+	
 	for (var i = 0; i < courses.courses.length; i++)
 	{
 		subject = courses.courses[i]["subject"];
 		id = courses.courses[i]["id"];
 		// Add to display
 		$("#input-list").append('<li>' + subject.toUpperCase() + " " + id.toUpperCase() + '</li>');
+	}
+	
+	if (courses.courses.length < 1) {
+		showNoClassText();
 	}
 };
 

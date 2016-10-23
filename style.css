@@ -66,7 +66,14 @@ h1 {
 
 .container {
     width: 1000px;
-    text-align: center;
+    text-align: center;		
+	animation: zoomin;
+	animation-duration: 0.5s
+}
+
+@keyframes zoomin {
+	from {transform: scale(0.02)}
+	to {transform: scale(1)}
 }
 
 .card {
