@@ -10,22 +10,29 @@
          <link defer rel="stylesheet" href="style.css">
          <script type="text/javascript" src="js/jquery.min.js"></script>
          <script type="text/javascript" src="js/main.js"></script>
+         <script type="text/javascript" src="js/Renderer.js"></script>
+         <script type="text/javascript" src="js/Views.js"></script>
+         <script type="text/javascript" src="js/InputView.js"></script>
      </head>
      <body>
          <div class="container">
              <div class="landing">
                  <h1>UCR Schedule Generator</h1>
              </div>
-             <div class="add-course">
-                 <input autofocus id= "course-input" class="course-input"></input>
-                 <button type="button" class="btn btn-success" id="submit-course">+</button>
-             </div>
-             <div class="input-courses card">
-                 <ul class="input-list" id="input-list">
-                     <li id="empty-list">You haven't added any courses yet!</li>
-                 </ul>
-             </div>
-             <button class="btn btn-primary"id="generate">Generate Schedule</button>
+			 <div class="input-stage">
+	             <div class="add-course">
+	                 <input autofocus id="course-input" class="course-input"></input>
+	                 <button type="button" class="btn btn-success" id="submit-course">+</button>
+	             </div>
+	             <div class="input-courses card">
+					 <h2>Courses</h2>
+	                 <ul class="input-list" id="input-list">
+	                     <li id="empty-list">You haven't added any courses yet!</li>
+	                 </ul>
+					 <button style="display:none;" class="btn btn-danger" id="remove-all">Remove all</button>
+	             </div>
+	             <button class="btn btn-primary"id="generate">Generate Schedule</button>
+			 </div>
          </div>
          <div class="footer">
              <div class="footer-links">
