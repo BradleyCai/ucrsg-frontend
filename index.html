@@ -2,18 +2,20 @@
 <html>
 	<head>
 	<title> Hello world </title>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script src="js/jquery.min.js"></script>
+		<script src="js/modernizr.custom.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/ns-default.css" />
+		<link rel="stylesheet" type="text/css" href="css/ns-style-growl.css" />
 	</head>
 	
 	<!-- Input textbox -->
 	<p>	<textarea id="exampleTextBox"> Math 10 </textarea> </p>
 	
 	<!-- Button connected to Input textbox -->
-	<button type="button" id="appendToArray"> Add Course </button>
+	<button type="button" id="addCourseBttn"> Add Course </button>
 	
 	<!-- Current Courses added -->
 	<ul id="array"></ul>
-	
 	
 	<!-- Button to send to server -->
 	<button id="sendButton"> Send to Server! </button>
@@ -24,44 +26,13 @@
 	
 	var courses = [];
 	
-	// Add course, input and validate first
-	$( "#appendToArray" ).click(function() {
-	
-		var text = $("#exampleTextBox").val();
-
-		// Validate and input text
-		if (validate(text)) {
-			courses.push(JSON.parse(toJSON(text)));
-			
-			// Update display
-			var trimText = text.trim();
-			$( "#array" ).append('<li>'+trimText+'</li>');
-		}
-		else {
-			// TODO: needs to be some other form of notification?
-			alert("Input text invalid.");
-		}
-		
-		
-		
+	$( "#addCourseBttn" ).click (function() {
+		addCourse($("#exampleTextBox").val());
 	});
-	
-	var validate = function (text) {
-		return text.match(/^\s*([A-Za-z]+)\s+([A-Za-z0-9]+)\s*$/g);
-	};
-	
-	// Converts text from "subject id" to JSON
-	var toJSON = function (text) {
-		var subject = /^\s*([A-Za-z]+)\s+([A-Za-z0-9]+)\s*$/g.exec(text)[1];
-		var id = /^\s*([A-Za-z]+)\s+([A-Za-z0-9]+)\s*$/g.exec(text)[2];
-		
-		return '{"subject":"' + subject + '","id":"' + id + '"}';
-	}
 	
 	// TODO: Send JSON to server
 	$( "#sendButton" ).click(function() {
-		
-		
+
 		var sendString = JSON.stringify(courses);
 		// Change the brackets [] on the end to {} for JSON format
 		sendString = sendString.substr(1, sendString.length-2);
@@ -72,6 +43,74 @@
 		
 	});
 	
+	// addCourse - Adds course to "courses" array, but validates and shows notification before doing so, also updates display
+	// Return value: true if course added, else false
+	// Params: text - user input string
+	var addCourse = function(text) {
+		// Validate and input text
+		if (validate(text)) {
+			// Add course
+			courses.push(JSON.parse(toJSON(text)));
+			// Update display
+			var trimText = text.trim();
+			$( "#array" ).append('<li>'+trimText+'</li>');
+			// Make notification
+			notify("Regular title", "Regular message", "regular");
+			return true;
+		}
+		else {
+			notify("ERROR title", "Error message", "error");
+			return false;
+		}
+	};
 	
+	// validate - validates string text using simple regex
+	// Return value: boolean (true if matches regex, else false)
+	// Params: text - user input string
+	var validate = function (text) {
+		return text.match(/^\s*([A-Za-z]+)\s+([A-Za-z0-9]+)\s*$/g);
+	};
 	
+	// toJSON - Converts text from single line of user input ("subject id") to JSON
+	// Return value: text string that can be JSON.parse'd
+	// Params: text - user input string
+	var toJSON = function (text) {
+		var subject = /^\s*([A-Za-z]+)\s+([A-Za-z0-9]+)\s*$/g.exec(text)[1];
+		var id = /^\s*([A-Za-z]+)\s+([A-Za-z0-9]+)\s*$/g.exec(text)[2];
+		
+		return '{"subject":"' + subject + '","id":"' + id + '"}';
+	}
+</script>
+<script src="js/classie.js"></script>
+<script src="js/notificationFx.js"></script>
+<script>
+	// notify - creates and shows a notification with the given title, message, type, lasting time
+	// Return value: NotificationFx object
+	// Params:
+	// 		title (will show) - title
+	// 		message (will show) - message
+	// 		type (will not show) - can be either 'error' or 'regular' (case insensitive)
+	// 		time (will not show, optional) - num of milliseconds notification will show
+	var notify = function(title, message, type, time=NotificationFx.prototype.options.ttl) {
+		// Effect is slide or jelly depending on type
+		type = type.toUpperCase();
+		var effect;
+		if (type == 'ERROR') effect = 'slide';
+		else if (type == 'REGULAR') effect = 'jelly';
+		else effect = 'jelly';
+		
+		// Create and customize notification
+		var notification = new NotificationFx({
+			title : '<p>' + title +'</p>',
+			message : '<p>' + message +'</p>',
+			effect : effect,
+			type : type.toLowerCase(), // notice, warning, error or success, MUST BE LOWERCASE
+			ttl: time
+		});
+		
+		// show the notification
+		notification.show();
+		
+		return notification;
+	};
 </script>
