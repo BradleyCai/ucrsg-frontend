@@ -6,47 +6,110 @@
   *
   */
 var Viewer = {
-    // Will add a view
-    addView: function(name, element, index) {
-        if (index === undefined) {
-            Viewer.views.name = element;
+    // Takes a name for the key, an element for the value,
+    addView: function(name, element) {
+        Viewer.views[name] = element;
+    },
+
+    addIndexView: function(name, element, index) {
+        if (Viewer.views[name] === undefined) {
+            Viewer.views[name] = [];
         }
-        else {
-            Viewer.views.name[index] = element;
-        }
+        Viewer.views[name][index] = element;
     },
 
     // Will set a view to display
-    showView: function(name, index) {
-        var ele;
-        if (index === undefined) {
-            ele = Viewer.views.name;
+    showView: function(name, init, location) {
+        // If the inputs are bad return false
+        if (name === undefined) {
+            return false;
+        }
+
+        // Load HTML element
+        var ele = Viewer.views[name];
+
+        // If it doesn't yet exist in the document, create it. Otherwise unhide
+        if ($(ele).length) {
+            // Default location is after the last element of the container
+            location = typeof location !== 'undefined' ? location : $("#container");
+
+            // Create div element, put the contents of the view in, and append
+            // it to the HTML
+            var view = document.createElement("div");
+            view = $(view);
+            view.hide(400);
+            view.id = name;
+            view.html(element);
+            location.append(view);
+            view.show(400);
+
+            // Callback
+            if (typeof(init) === "function")
+                init();
         }
         else {
-            ele = Viewer.views.name[index];
+            ele.show(400);
         }
-        ele.show(400);
+    },
+
+    showIndexView: function(name, index, init, location) {
+        // If the inputs are bad return false
+        if (index === undefined && name === undefined) {
+            return false;
+        }
+
+        // Load HTML element
+        var ele = Viewer.views[name][index];
+
+        // If it doesn't yet exist in the document, create it. Otherwise unhide
+        if ($(ele).length) {
+            // Default location is after the last element of the container
+            location = typeof location !== 'undefined' ? location : $("#container");
+
+            // Create div element and put the contents in
+            var view = document.createElement("div");
+            view = $(view);
+            view.hide(400);
+            view.id = name;
+            view.html(element);
+            location.append(view);
+            view.show(400);
+
+            // Callback
+            if (typeof(init) === "function")
+                init();
+        }
+        else {
+            ele.show(400);
+        }
     },
 
     // Will remove a certain view. Default is to have it fade away
-    removeView: function(name) {
+    hideView: function(name) {
         var ele;
-        if (index === undefined) {
-            ele = Viewer.views.name;
+        if (typeof index === undefined) {
+            ele = Viewer.views[name];
         }
         else {
-            ele = Viewer.views.name[index];
+            ele = Viewer.views[name][index];
         }
         ele.hide(400);
     },
 
-    getview: function(name, index) {
-        if (index === undefined) {
-            return Viewer.views.name;
-        }
-        else {
-            return Viewer.views.name[index];
-        }
+    getView: function(name) {
+        return Viewer.views[name];
+    },
+
+    getIndexView: function(name, index) {
+        return Viewer.views[name][index];
+    },
+
+    deleteView: function(name) {
+        delete Viewer.views[name];
+    },
+
+    deleteIndexView: function(name, index) {
+        delete Viewer.views[name][index];
     },
 
     // Object of views. Contains the jQuery HTML objects of each view. Views
