@@ -10,6 +10,8 @@ var toJSON = function (text) {
 	return {"subject": subject, "id": id};
 };
 
+
+
 $(document).ready(function() {
 	var courses = {
         "courses": []
@@ -21,7 +23,7 @@ $(document).ready(function() {
         var courseIdentifier = toJSON(text);
         var id = courseIdentifier.id;
         var subject = courseIdentifier.subject;
-
+		
         console.log(courseIdentifier.id);
 
 		// Validate and input text
@@ -31,7 +33,7 @@ $(document).ready(function() {
             if (empty_list === undefined) {
                 empty_list.remove();
             }
-    			$("#input-list").append('<li>' + subject + " " + id + '</li>');
+    			$("#input-list").append('<li>' + subject.toUpperCase() + " " + id.toUpperCase() + '</li>');
 
 			courses.courses.push(courseIdentifier);
 		}
@@ -39,6 +41,7 @@ $(document).ready(function() {
 			// TODO: needs to be some other form of notification?
 			alert("Input text invalid.");
 		}
+		
         console.log("hello");
 	});
 
